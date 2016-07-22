@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/minhuang0/demo#readme",
   "devDependencies": {
+    "gulp-connect": "^4.2.0",
     "gulp-markdown": "^1.2.0"
   }
 }
