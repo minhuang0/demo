@@ -4,9 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>demo</title>
-    <link rel="stylesheet" href="">
+    <link rel="import" href="./README.html">
 </head>
 <body>
-    <a href="https://github.com/minhuang0/demo">链接</a>
+    <div id="container"></div>
+    <script>
+    // 获得导入内容。
+    var link = document.querySelector('link[rel="import"]');
+    var post = link.import.querySelector('#blog-post');
+
+    var container = document.querySelector('#container');
+    container.appendChild(post.cloneNode(true));
+  </script>
 </body>
 </html>

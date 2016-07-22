@@ -1,0 +1,22 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "记录一些开发过程中一些Demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minhuang0/demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minhuang0/demo/issues"
+  },
+  "homepage": "https://github.com/minhuang0/demo#readme",
+  "devDependencies": {
+    "gulp-markdown": "^1.2.0"
+  }
+}
