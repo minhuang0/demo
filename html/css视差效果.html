@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>css视差效果</title>
+    <link rel="stylesheet" href="">
+    <style>
+    html,
+    body {
+        height: 100%;
+    }
+    
+    body,
+    div,
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .bg {
+        background-repeat: repeat-x;
+        background-color: transparent;
+        background-size: auto 100%;
+        min-height: 200px
+    }
+    
+    .bg-1 {
+        background-image: url('../images/4.png');
+        background-position: 20% 0;
+    }
+    
+    .bg-2 {
+        background-image: url('../images/3.png');
+
+        background-position: 40% 0;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="bg bg-1">
+        <div class="bg bg-2">
+        </div>
+    </div>
+</body>
+
+</html>
