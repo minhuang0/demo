@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>高度相等的列</title>
+    <link rel="stylesheet" href="">
+    <style>
+    .wrapper {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+    }
+    
+    .box {
+        display: inline;
+        width: 250px;
+        float: left;
+        padding: 20px 20px 1020px;
+        margin-bottom: -1000px;
+        margin-left: 20px;
+        background-color: #ccc;
+    }
+    
+    .bottom {
+        position: absolute;
+        height: 20px;
+        width: 290px;
+        bottom: 0;
+        margin-left: -20px;
+    }
+    </style>
+    <style>
+    /* column-* 方式等高列 */
+    /* 主流浏览器都不支持 column-fill 属性。 */
+    .col{
+        -moz-column-count: 3;
+        -moz-column-width: 14rem;
+        -moz-column-gap: 2rem;
+        -moz-column-rule: 1px solid #000;
+        -webkit-column-count: 3;
+        -webkit-column-width: 14rem;
+        -webkit-column-gap: 2rem;
+        -webkit-column-rule: 1px solid #000;
+        column-count: 3;
+        column-width: 14rem;
+        column-gap: 2rem;
+        column-rule: 1px solid #000;
+        background: #ccc;
+        margin: 20px;
+        padding: 20px;
+    }
+    </style>
+</head>
+
+<body>
+    <h1>等高列 overflow方式:</h1>
+    <div class="wrapper">
+        <div class="box">
+            <h1>步骤</h1>
+            <ul>
+                <li>div.box padding-bottom: 1020px margin-bottom: -1000px</li>
+                <li>div.wrapper overflow:hidden</li>
+            </ul>
+            <div class="bottom"></div>
+        </div>
+        <div class="box">
+            <h1>原理</h1>
+            <ul>
+                <li>给每个框设置最大的底边距,使用数值相似的负边距消除这个高度</li>
+                <li>这样导致每个框都溢出容器元素</li>
+                <li>利用外层overflow hidden属性隐藏溢出的空间</li>
+            </ul>
+            <div class="bottom"></div>
+        </div>
+        <div class="box">
+            <h1>参考资料</h1>
+            <ul>
+                <li>精通css第2版 8.6章节</li>
+            </ul>
+            <div class="bottom"></div>
+        </div>
+    </div>
+    <h1>等高列 css3 column-* 属性</h1>
+    <p class="col">等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列等高列</p>
+</body>
+
+</html>
