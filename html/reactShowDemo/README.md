@@ -5,3 +5,7 @@
 - 用户名 a
 - 学号 a
 - 密码 a
+
+[浏览地址](http://www.huangmin.me/demo/html/reactShowDemo/index.html)
+
+

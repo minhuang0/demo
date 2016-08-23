@@ -7,3 +7,4 @@
 - [css相对视差](./html/css视差效果.html)
 - [css滚动视差](./html/css视差滚动.html)
 - [css二级导航菜单](./html/css二级导航菜单.html)
+- [require demo](./html/requireJsDemo/require.html)
