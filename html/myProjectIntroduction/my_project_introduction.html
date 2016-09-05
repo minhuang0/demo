@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Project Introduction</title>
+    <style>
+    body{
+        height: 100%;
+        width: 100%;
+    }
+    img {
+        height: 200px;
+        transition: -webkit-transform 1s ease;
+    }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>
+            <p class="title">交通部机动车考试项目</p>
+            <p class="responsibility">独立负责里面项目的编写。</p>
+            <div class="images">
+                <img src="images/translate_01.png" alt="">
+                <img src="images/translate_02.png" alt="">
+                <img src="images/translate_03.png" alt="">
+            </div>
+        </li>
+        <li>
+            <p class="title">自动变速箱系统</p>
+            <p class="responsibility">独立负责里面项目的编写。</p>
+            <div class="images">
+                <img src="images/dsg_01.png" alt="">
+                <img src="images/dsg_02.png" alt="">
+                <img src="images/dsg_03.png" alt="">
+            </div>
+        </li>
+        <li>
+            <p class="title">微信端公众服务平台</p>
+            <p class="responsibility">独立负责里面项目的编写。</p>
+            <div class="images">
+                <img src="images/wei_xin_01.png" alt="">
+                <img src="images/wei_xin_02.png" alt="">
+                <img src="images/wei_xin_03.png" alt="">
+                <img src="images/wei_xin_04.png" alt="">
+            </div>
+        </li>
+        <li>
+            <p class="title">微信端管理系统</p>
+            <p class="responsibility">独立负责里面项目的编写。</p>
+            <div class="images">
+                <img src="images/ji_shi_manage_01.png" alt="">
+                <img src="images/ji_shi_manage_01.png" alt="">
+                <img src="images/ji_shi_manage_01.png" alt="">
+            </div>
+        </li>
+        <li>
+            <p class="title">职业院校课</p>
+            <p class="responsibility">负责实现新增功能并修改BUG</p>
+            <div class="images">
+                <img src="images/zhi_xiao_01.png" alt="">
+                <img src="images/zhi_xiao_02.png" alt="">
+                <img src="images/zhi_xiao_03.png" alt="">
+            </div>
+        </li>
+        <li>
+            <p class="title">医道易佰</p>
+            <p class="responsibility">独立负责web前端项目的代码编写、维护、部署和部分手机端功能。</p>
+            <div class="images">
+                <img src="images/yi_dao_01.jpeg" alt="">
+                <img src="images/yi_dao_02.jpeg" alt="">
+                <img src="images/yi_dao_03.jpeg" alt="">
+            </div>
+        </li>
+        <li>
+            <p class="title">悦装网</p>
+            <p class="responsibility">负责手机端三个模块和后端接口及数据库的整体设计。</p>
+            <div class="images">
+                <img src="images/yue_zhuang_wang_01.jpeg" alt="">
+                <img src="images/yue_zhuang_wang_02.jpeg" alt="">
+                <img src="images/yue_zhuang_wang_03.jpeg" alt="">
+                <img src="images/yue_zhuang_wang_04.jpeg" alt="">
+            </div>
+        </li>
+        <li>
+            <p class="title">极客家装预算</p>
+            <p class="responsibility">负责家装风格定制模块的代码编写。</p>
+            <div class="images">
+                <img src="images/ji_ke_jia_zhuang_01.jpeg" alt="">
+                <img src="images/ji_ke_jia_zhuang_02.jpeg" alt="">
+                <img src="images/ji_ke_jia_zhuang_03.jpeg" alt="">
+                <img src="images/ji_ke_jia_zhuang_04.jpeg" alt="">
+            </div>
+        </li>
+        <li>
+            <p class="title">HappyStock</p>
+            <p class="responsibility">负责模拟炒股模块的手机端代码编写，后台数据库、接口编写。</p>
+            <div class="images">
+                <img src="images/happystock_01.jpeg" alt="">
+                <img src="images/happystock_02.jpeg" alt="">
+            </div>
+        </li>
+    </ul>
+    <script>
+    window.onload = function() {
+        addImageZoomEvent();
+    }
+
+    function addImageZoomEvent() {
+        var images = document.getElementsByTagName('img');
+        Array.prototype.forEach.call(images, function(el) {
+            el.addEventListener('click', function() {
+                createZoomImg(el.src);
+            })
+        });
+    }
+
+    function createZoomImg(url) {
+        body = document.getElementsByTagName('body')[0];
+        var shadow = document.createElement('div');
+        shadow.style.position = "fixed";
+        shadow.style.width = "100%";
+        shadow.style.height = "100%";
+        shadow.style.top = 0;
+        shadow.style.left = 0;
+        shadow.style.margin = "auto";
+        shadow.style.background = "rgba(0, 0, 0, 0.8)";
+        shadow.addEventListener('click',function(){
+            body.removeChild(shadow);
+        });
+        var img = document.createElement('img');
+        img.src = url;
+        img.style.position = "fixed";
+        img.style.top = 0;
+        img.style.left = 0;
+        img.style.right = 0;
+        img.style.bottom = 0;
+        img.style.margin = "auto";
+        img.style.height = "auto";
+        img.style.maxHeight = "100%";
+        img.style.width = "auto";
+        shadow.appendChild(img);
+        body.appendChild(shadow);
+    }
+    </script>
+</body>
+
+</html>

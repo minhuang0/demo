@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>chart Js</title>
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script> -->
+    <script src="https://cdn.bootcss.com/Chart.js/2.2.2/Chart.min.js"></script>
+</head>
+
+<body>
+    <div id="myTable"></div>
+    <script>
+    //Chart.defaults.global.legend.display = false;
+    //Chart.defaults.global.tooltips.enabled = false;
+
+
+    function CreateTabelAutoMakeChart(args) {
+        function createTable(args) {
+            var table = document.createElement('table');
+
+            var xArray = args.data.xTitle,
+                yArray = args.data.yTitle;
+
+            var xLength = xArray.length,
+                yLength = yArray.length;
+
+            var firstTr = document.createElement('tr');
+            firstTr.appendChild(document.createElement('th'));
+            xArray.forEach(function(array, idx) {
+                var th = document.createElement('th');
+                th.innerText = array;
+                firstTr.appendChild(th);
+            });
+            table.appendChild(firstTr);
+
+            function createTdInculdeInput() {
+                var th = document.createElement('th');
+                var input = document.createElement('input');
+                input.onkeypress = function() {
+                    return event.charCode >= 48 && event.charCode <= 57;
+                }
+                input.onchange = function() {
+                    var inputs = document.getElementById("tableGroup").querySelectorAll("input");
+                    var makeChartBtnIsDisabled = true;
+                    Array.prototype.forEach.call(inputs, function(el, i) {
+                        if (el.value === "") {
+                            makeChartBtnIsDisabled = false;
+                        }
+                    });
+                    if (makeChartBtnIsDisabled) {
+                        makeChartBtn.disabled = false;
+                    } else {
+                        makeChartBtn.disabled = true;
+                    }
+                }
+                input.type = 'text';
+                th.appendChild(input);
+                return th;
+            }
+
+            yArray.forEach(function(array, idx) {
+                var tr = document.createElement('tr');
+                var th = document.createElement('th');
+                var inputNum = 0;
+                th.innerText = array;
+                tr.appendChild(th);
+                while (inputNum < xLength) {
+                    tr.appendChild(createTdInculdeInput());
+                    inputNum++;
+                }
+                table.appendChild(tr);
+            });
+
+            return table;
+        }
+
+        function createMakeChartBtn(parent, args) {
+            var makeChartBtn = document.createElement('button');
+            makeChartBtn.innerText = "生成表格";
+            makeChartBtn.addEventListener('click', function() {
+                var inputData = [],
+                    tableData = [],
+                    isValidate = true;
+                var elements = parent.querySelectorAll('input');
+                Array.prototype.forEach.call(elements, function(el, i) {
+                    if (el.value === "") {
+                        isValidate = false;
+                    }
+                    inputData.push(el.value);
+                });
+                if (!isValidate) {
+                    return;
+                }
+                for (var inputIdx = 0; inputIdx < inputData.length / 2; inputIdx++) {
+                    tableData.push({
+                        x: inputData[inputIdx],
+                        y: inputData[inputData.length / 2 + inputIdx]
+                    });
+                }
+                var chartArgs = {
+                    parent: parent,
+                    data: [{
+                        backgroundColor: "transparent",
+                        borderColor: 'red',
+                        data: tableData
+                    }, {
+                        backgroundColor: "transparent",
+                        data: args.data.defaultsData[0]
+                    }, {
+                        backgroundColor: "transparent",
+                        data: args.data.defaultsData[1]
+                    }],
+                    options: args.options
+                };
+                createChart(chartArgs);
+            });
+            return makeChartBtn;
+        }
+
+
+
+        function clearInputValueBtn(parent, args) {
+            var clearTableBtn = document.createElement('button');
+            clearTableBtn.innerText = "清除数据";
+            clearTableBtn.addEventListener('click', function() {
+                Array.prototype.forEach.call(parent.querySelectorAll('input'), function(el, i) {
+                    el.value = "";
+                });
+                makeChartBtn.disabled = true;
+            });
+            return clearTableBtn;
+        }
+
+        function createChart(args) {
+            var body = document.getElementsByTagName("body")[0];
+            var div = document.createElement('div');
+            var closeChart = document.createElement('div');
+            closeChart.style.position = "absolute";
+            closeChart.style.width = "20px";
+            closeChart.style.height = "20px";
+            closeChart.style.top = "0";
+            closeChart.style.right = "0";
+            closeChart.style.backgroundColor = "red";
+            closeChart.onclick = function() {
+                this.parentNode.parentNode.removeChild(this.parentNode);
+            }
+            div.appendChild(closeChart);
+            div.id = "chart";
+            div.style.position = "absolute";
+            div.style.width = "400px";
+            div.style.height = "400px";
+            div.style.left = "10px";
+            div.style.top = "200px";
+            div.style.backgroundColor = "white";
+            var chart = document.getElementById('chart');
+            chart && chart.parentNode.removeChild(chart);
+            chart = document.createElement('canvas');
+            chart.width = 400;
+            chart.height = 400;
+
+            div.appendChild(chart);
+            body.appendChild(div);
+            //args.parent.appendChild(chart);
+            var scatterChart = new Chart(chart, {
+                type: 'line',
+                data: {
+                    datasets: args.data
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        enabled: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            type: 'linear',
+                            position: 'bottom',
+                            scaleLabel: {
+                                display: true,
+                                labelString: args.options.xAxesLabelString
+                            }
+                        }],
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: args.options.yAxesLabelString
+                            }
+                        }]
+                    }
+                }
+            });
+
+        }
+        var div = document.createElement('div');
+        var table = createTable(args);
+        var makeChartBtn = createMakeChartBtn(div, args);
+        var clearDataBtn = clearInputValueBtn(div, args)
+
+        div.id = "tableGroup"
+        makeChartBtn.class = "make-chart-btn";
+        clearDataBtn.class = "clear-data-btn";
+        makeChartBtn.disabled = true;
+        div.appendChild(table);
+        div.appendChild(makeChartBtn);
+        div.appendChild(clearDataBtn);
+        args.parent.appendChild(div);
+    }
+    var myTable = new CreateTabelAutoMakeChart({
+        parent: document.getElementById("myTable"),
+        data: {
+            xTitle: [1, 2, 3, 4, 5],
+            yTitle: ["电压", "气压"],
+            defaultsData: [
+                [{
+                    x: 10,
+                    y: 30
+                }, {
+                    x: 20,
+                    y: 20
+                }, {
+                    x: 30,
+                    y: 10
+                }],
+                [{
+                    x: 15,
+                    y: 35
+                }, {
+                    x: 25,
+                    y: 25
+                }, {
+                    x: 35,
+                    y: 15
+                }]
+            ],
+        },
+        options: {
+            xAxesLabelString: "气压",
+            yAxesLabelString: "电压",
+        }
+    });
+
+
+    /*var myChart = new CreateChart(args);
+
+    function CreateChart(args) {
+        var chart = document.createElement('canvas');
+        chart.width = args.options.width || 240;
+        chart.height = args.options.height || 300;
+        args.parent.appendChild(chart);
+        var scatterChart = new Chart(chart, {
+            type: 'line',
+            data: {
+                datasets: args.data
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    enabled: false
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'linear',
+                        position: 'bottom',
+                        scaleLabel: {
+                            display: true,
+                            labelString: args.options.xAxesLabelString
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: args.options.yAxesLabelString
+                        }
+                    }]
+                }
+            }
+        });
+    }*/
+    /*var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["10", "14", "20","30"],
+            datasets: [{
+                label: "电压",
+                data: [12, 19, 3, 30],
+                tension: 0.4,
+                backgroundColor: "transparent",
+                borderWidth: 1,
+                responsive: true,
+                scaleFontColor: "#FF5972",
+                borderColor: "red"
+            }, {
+                label: "电压",
+                data: [20, 15, 10, 5],
+                tension: 0,
+                backgroundColor: "transparent",
+                borderWidth: 1,
+                color: "gray"
+            }, {
+                label: "电压",
+                data: [25, 20, 15, 10],
+                tension: 0,
+                backgroundColor: "transparent",
+                borderWidth: 1,
+                color: "gray"
+            }]
+        }
+    });*/
+    /*var array = [
+        [10, 10],
+        [20, 20],
+        [30, 30],
+        [50, 50]
+    ];
+
+    var arrayX = [],
+        arrayY = [];
+
+    Array.prototype.max = function() {
+        return Math.max.apply(null, this);
+    };
+
+    Array.prototype.min = function() {
+        return Math.min.apply(null, this);
+    };
+
+    array.forEach(function(arrayItem) {
+        arrayX.push(arrayItem[0]);
+        arrayY.push(arrayItem[1]);
+    });
+
+    console.info(arrayX.max() / array.length);
+
+    var marginWidth = 10;
+
+    var myChart = document.getElementById("myChart");
+    var chart = myChart.getContext("2d");
+    var width = myChart.width,
+        height = myChart.height
+    chart.moveTo(marginWidth, marginWidth);
+    chart.lineTo(marginWidth, height - marginWidth);
+    chart.lineTo(width - marginWidth, height - marginWidth);
+    chart.moveTo(arrayX)
+    chart.stroke();*/
+    </script>
+</body>
+
+</html>
