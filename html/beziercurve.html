@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>贝塞尔曲线绘制</title>
+    <style>
+    body {
+        margin: 0;
+    }
+    
+    .simulate-canvas {
+        position: absolute;
+        width: 500px;
+        height: 350px;
+        left: 0;
+        top: 0;
+        border: 1px solid #d3d3d3;
+        background-color: transparent;
+    }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" class="my-canvas" width="500" height="350" style="border:1px solid #d3d3d3;">流览器不支持Canvas</canvas>
+    <div id="simulateCanvas" class="simulate-canvas"></div>
+    <script>
+    var myCanvas = document.getElementById('myCanvas'),
+        myCanvasContext = myCanvas.getContext('2d'),
+        simulateCanvas = document.getElementById("simulateCanvas"),
+        simulateCanvasLeft = simulateCanvas.offsetLeft,
+        simulateCanvasTop = simulateCanvas.offsetTop,
+        points = [],
+        pointR = 4;
+    simulateCanvas.addEventListener('click', function(event) {
+        var x = event.pageX - simulateCanvasLeft,
+            y = event.pageY - simulateCanvasLeft,
+            isDrawPoint = true;
+        var point = createPoint(x, y, pointR);
+        points.forEach(function(point, idx) {
+            var pointTop = parseInt(point.style.top),
+                pointLeft = parseInt(point.style.left);
+            if (y > pointTop - pointR && y < pointTop + 2 * pointR && x > pointLeft - pointR && x < pointLeft + 2 * pointR) {
+                isDrawPoint = false;
+            }
+        });
+        if (isDrawPoint) {
+            points.push(point);
+            this.appendChild(point);
+            drawLine(myCanvasContext, points);
+        }
+    });
+
+    function createPoint(left, top, pointR) {
+        console.log(left, top);
+        var point = document.createElement('span');
+        point.style.position = "absolute";
+        point.style.left = left - pointR + "px";
+        point.style.top = top - pointR + "px";
+        point.style.width = (pointR - 1) * 2 + "px";
+        point.style.height = (pointR - 1) * 2 + "px";
+        point.style.border = "1px solid black";
+        point.style.borderRadius = pointR + "px";
+        point.style.backgroundColor = 'white';
+        point.draggable = true;
+        point.addEventListener('ondrop',function(){
+            console.info(this);
+        }) 
+        return point;
+    }
+
+    function drawLine(context, lineArray) {
+        context.beginPath();
+        console.log(lineArray);
+        var firstLine = lineArray.shift();
+        context.moveTo(parseInt(firstLine.style.left) + 4, parseInt(firstLine.style.top) + 4);
+        lineArray.forEach(function(line) {
+            context.lineTo(parseInt(line.style.left) + 4, parseInt(line.style.top) + 4);
+        });
+        context.stroke();
+        lineArray.unshift(firstLine);
+    }
+    /*var elem = document.getElementById('myCanvas'),
+            elemLeft = elem.offsetLeft,
+            elemTop = elem.offsetTop,
+            context = elem.getContext('2d'),
+            points = [],
+            pointR = 4,
+            elements = [];
+
+        // Add event listener for `click` events.
+        elem.addEventListener('click', function(event) {
+            var x = event.pageX - elemLeft,
+                y = event.pageY - elemTop,
+                isDrawPoint = true;
+
+            console.log(x, y);
+
+
+            points.forEach(function(point, idx) {
+                if (y > point.top - pointR && y < point.top + pointR && x > point.left - pointR && x < point.left + pointR) {
+                    isDrawPoint = false;
+                    return;
+                }
+            });
+            if (isDrawPoint) {
+                drawPoint(context, x, y, pointR);
+                points.push({
+                    left: x,
+                    top: y,
+                    r: pointR
+                });
+                drawLine(context, points);
+            }
+
+
+
+
+        }, false);
+
+        function drawPoint(context, left, right, pointR) {
+            context.beginPath();
+            context.arc(left, right, pointR, 0, 2 * Math.PI);
+            context.stroke();
+        }
+
+        function drawLine(context, lineArray) {
+            context.beginPath();
+            var firstLine = lineArray.shift();
+            context.moveTo(firstLine.left, firstLine.top);
+            lineArray.forEach(function(line) {
+                context.lineTo(line.left, line.top);
+            });
+            context.stroke();
+            lineArray.unshift(firstLine);
+        }*/
+    </script>
+</body>
+
+</html>
